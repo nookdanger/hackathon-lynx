@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder class="net.logstash.logback.encoder.LogstashEncoder">
+            <customFields>{"app-name":"lynx-api", "category":"framework"}</customFields>
+            <fieldNames>
+                <timestamp>time</timestamp>
+                <version>[ignore]</version>
+            </fieldNames>
+        </encoder>
+        <springProfile name="dev">
+            <encoder>
+                <pattern>%d{HH:mm:ss.SSS} | %5p | %logger{25} | %m%n</pattern>
+                <charset>utf8</charset>
+            </encoder>
+        </springProfile>
+    </appender>
+    <appender name="APPLICATION" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder class="net.logstash.logback.encoder.LogstashEncoder">
+            <customFields>{"app-name":"lynx-api", "category":"application"}</customFields>
+            <fieldNames>
+                <timestamp>time</timestamp>
+                <version>[ignore]</version>
+            </fieldNames>
+        </encoder>
+        <springProfile name="dev">
+            <encoder>
+                <pattern>%d{HH:mm:ss.SSS} | %5p | %logger{25} | %m%n</pattern>
+                <charset>utf8</charset>
+            </encoder>
+        </springProfile>
+    </appender>
+
+    <logger name="com.krungthai.lynx" level="INFO" additivity="false">
+        <appender-ref ref="APPLICATION"/>
+    </logger>
+    <logger name="io.lettuce.core.protocol.ConnectionWatchdog" level="WARN" additivity="false">
+        <appender-ref ref="APPLICATION" />
+    </logger>
+    <logger name="io.lettuce.core.protocol.ReconnectionHandler" level="WARN" additivity="false">
+        <appender-ref ref="APPLICATION" />
+    </logger>
+    <logger name="reactor.core.publisher" level="OFF" />
+    <logger name="org.apache.kafka.clients" level="OFF"/>
+    <root level="INFO">
+        <appender-ref ref="STDOUT"/>
+    </root>
+</configuration>

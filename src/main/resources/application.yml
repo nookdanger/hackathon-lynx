@@ -1,0 +1,7 @@
+server:
+  port: 8181
+spring:
+  r2dbc:
+    url: r2dbc:pool:mssql://159.138.244.24:1433/lynx?sendStringParametersAsUnicode=false&connectTimeout=PT10s
+    username: rdsuser
+    password: P@ssw0rd00
